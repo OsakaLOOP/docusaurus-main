@@ -1,0 +1,9 @@
+{
+  "label": "热统 Thermostatistics",
+  "position": 1,
+  "link": {
+    "slug": "/thermostats",
+    "type": "generated-index",
+    "description":"看的越多, 会的越少"
+  }
+}

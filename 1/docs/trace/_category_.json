@@ -1,0 +1,9 @@
+{
+  "label": "旅迹追踪",
+  "position": 5,
+  "link": {
+    "slug": "/trace",
+    "type": "generated-index",
+    "description":"风光、铁道、美食、以及打 call 逛展买本子"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "label": "阅番无数",
+  "position": 6,
+  "link": {
+    "slug": "/bangumi",
+    "type": "generated-index",
+    "description":"点完一部 アニメ 的格子, 除了空虚还能留下什么"
+  }
+}

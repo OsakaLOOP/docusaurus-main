@@ -1,0 +1,9 @@
+{
+  "label": "物理学习",
+  "position": 2,
+  "link": {
+    "slug": "/physics",
+    "type": "generated-index",
+    "description":"那些并不 Trival 的思考"
+  }
+}

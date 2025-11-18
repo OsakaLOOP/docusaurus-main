@@ -1,0 +1,9 @@
+{
+  "label": "力学 & 理力 Mechanics",
+  "position": 0,
+  "link": {
+    "slug": "/mechanics",
+    "type": "generated-index",
+    "description":"Lagrange 方程解决所有, 鉴定为 La 完了. 那么我几何力学又该放哪?"
+  }
+}

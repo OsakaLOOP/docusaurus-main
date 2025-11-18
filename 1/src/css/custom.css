@@ -28,95 +28,15 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
-
-/* Target the main content area */
-.docPage_docContainer {
-  position: relative;
-  /* Add padding-top to account for the space the image/gradient will take */
-  padding-top:10vh; /* Adjust as needed */
-  z-index: 0;
-  min-height: calc(100vh - 20px);
-}
-
-/* 1. Full Background Image Container */
-.docPage_docContainer .full-frame-bg {
-  /* Use the CSS variable set dynamically in the React component */
-  background-image: var(--custom-bg-image-url);
-
-  background-size: cover;
-  background-repeat: no-repeat;
+.page-bg-container {
+  /* Set the background position and size */
   background-position: center top;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh; /* Set the height for the visible image/gradient area */
-  z-index: -2;
-}
-
-/* 2. Gradient Overlay (using ::after on the new element) */
-.docPage_docContainer .full-frame-bg::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-
-  /* Vertical gradient from 100% opacity to 0% opacity (image area)
-     mixing into the page's white background */
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.0) 0%, /* Start fully transparent (full image) */
-    rgba(255, 255, 255, 0.02) 30%,
-    rgba(255, 255, 255, 0.5) 40%,
-    rgba(255, 255, 255, 1) 100% /* End fully opaque white (blends into white page) */
-  );
-}
-
-.widget-container {
-  /* This is the aggressive font size reset needed to counter Docusaurus's banner rules. */
-  font-size: 1rem !important;
-
-  /* Structural fixes to ensure the max-w-* utility classes work within a flex container. */
-  display: block !important;
-  width: 100% !important;
-
-  /* NEW: Prevents Docusaurus's surrounding flex containers (like the hero banner) from forcing the widget to stretch. */
-  flex-shrink: 0 !important;
-}
-
-/* Target the link container and force standard link/text color/behavior */
-.now-playing-link {
-    /* Reset Docusaurus link color to pure black/dark gray */
-    color: #1f2937 !important; /* Matches Tailwind text-gray-800 */
-    font-size: inherit !important; /* Use font size inherited from .widget-container (1rem) */
-    text-decoration: none !important; /* Remove any underline */
-    padding: 0; /* Tailwind padding will be added via JSX classes */
-}
-
-/* Track Name */
-.now-playing-link p:first-child {
-    color: #1f2937 !important; /* Matches Tailwind text-gray-800 */
-    font-size: initial !important;
-}
-
-/* Artist Name */
-.now-playing-link p:last-child {
-    color: #6b7280 !important; /* Matches Tailwind text-gray-500 */
-    font-size: initial !important;
-}
-
-/* Ensure the hover effect works as intended */
-.now-playing-link:hover, .now-playing-link:focus {
-    color: #4f46e5 !important; /* Matches Tailwind group-hover:text-indigo-600 */
-    text-decoration: none !important;
-}
-
-/* Ensure the progress bar container has sufficient background contrast */
-.now-playing-progress-bar-container {
-    background-color: #dffffc80 !important; /* Matches Tailwind bg-gray-200 */
+  background-size: cover; /* Ensures full width/height coverage */
+  background-repeat: no-repeat;
+  width: 100vw; /* Full viewport width */
+  min-height: 400px; /* Example height for the background area */
+  position: relative; /* Needed for the absolute positioning of the overlay */
+  margin-top: calc(var(--ifm-navbar-height) * -1); /* Pulls it up behind the navbar */
 }
 .markdown pre {
   /* Use explicit opaque white to override theme variables that might be semi-transparent */
@@ -215,6 +135,51 @@
   color: #000000;
   fill: currentColor;
 }
+
+.docPage_docContainer {
+  position: relative;
+  /* Add padding-top to account for the space the image/gradient will take */
+  padding-top:10vh; /* Adjust as needed */
+  z-index: 0;
+  min-height: calc(100vh - 20px);
+}
+
+/* 1. Full Background Image Container */
+.docPage_docContainer .full-frame-bg {
+  /* Use the CSS variable set dynamically in the React component */
+  background-image: var(--custom-bg-image-url);
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Set the height for the visible image/gradient area */
+  z-index: -2;
+}
+
+/* 2. Gradient Overlay (using ::after on the new element) */
+.docPage_docContainer .full-frame-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  /* Vertical gradient from 100% opacity to 0% opacity (image area)
+     mixing into the page's white background */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.0) 0%, /* Start fully transparent (full image) */
+    rgba(255, 255, 255, 0.02) 30%,
+    rgba(255, 255, 255, 0.5) 40%,
+    rgba(255, 255, 255, 1) 100% /* End fully opaque white (blends into white page) */
+  );
+}
 .navbar {
   /* Make the background transparent or semi-transparent */
   background-color: rgba(255, 255, 255, 0.5) !important;
@@ -229,3 +194,46 @@
   color: var(--ifm-navbar-link-color) !important;
 }
 
+.widget-container {
+  /* This is the aggressive font size reset needed to counter Docusaurus's banner rules. */
+  font-size: 1rem !important;
+
+  /* Structural fixes to ensure the max-w-* utility classes work within a flex container. */
+  display: block !important;
+  width: 100% !important;
+
+  /* NEW: Prevents Docusaurus's surrounding flex containers (like the hero banner) from forcing the widget to stretch. */
+  flex-shrink: 0 !important;
+}
+
+/* Target the link container and force standard link/text color/behavior */
+.now-playing-link {
+    /* Reset Docusaurus link color to pure black/dark gray */
+    color: #1f2937 !important; /* Matches Tailwind text-gray-800 */
+    font-size: inherit !important; /* Use font size inherited from .widget-container (1rem) */
+    text-decoration: none !important; /* Remove any underline */
+    padding: 0; /* Tailwind padding will be added via JSX classes */
+}
+
+/* Track Name */
+.now-playing-link p:first-child {
+    color: #1f2937 !important; /* Matches Tailwind text-gray-800 */
+    font-size: initial !important;
+}
+
+/* Artist Name */
+.now-playing-link p:last-child {
+    color: #6b7280 !important; /* Matches Tailwind text-gray-500 */
+    font-size: initial !important;
+}
+
+/* Ensure the hover effect works as intended */
+.now-playing-link:hover, .now-playing-link:focus {
+    color: #4f46e5 !important; /* Matches Tailwind group-hover:text-indigo-600 */
+    text-decoration: none !important;
+}
+
+/* Ensure the progress bar container has sufficient background contrast */
+.now-playing-progress-bar-container {
+    background-color: #dffffc80 !important; /* Matches Tailwind bg-gray-200 */
+}

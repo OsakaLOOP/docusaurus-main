@@ -1,0 +1,9 @@
+{
+  "label": "ボカロ文化",
+  "position": 2,
+  "link": {
+    "slug": "/vocaloid",
+    "type": "generated-index",
+    "description": "漫谈、体验、创作、分享"
+  }
+}

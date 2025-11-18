@@ -1,0 +1,9 @@
+{
+  "label": "日语学习 与 JLPT",
+  "position": 3,
+  "link": {
+    "slug": "/jlpt",
+    "type": "generated-index",
+    "description":"Since 2018"
+  }
+}
