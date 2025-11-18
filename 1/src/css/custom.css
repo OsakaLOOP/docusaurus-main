@@ -1,0 +1,231 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Target the main content area */
+.docPage_docContainer {
+  position: relative;
+  /* Add padding-top to account for the space the image/gradient will take */
+  padding-top:10vh; /* Adjust as needed */
+  z-index: 0;
+  min-height: calc(100vh - 20px);
+}
+
+/* 1. Full Background Image Container */
+.docPage_docContainer .full-frame-bg {
+  /* Use the CSS variable set dynamically in the React component */
+  background-image: var(--custom-bg-image-url);
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Set the height for the visible image/gradient area */
+  z-index: -2;
+}
+
+/* 2. Gradient Overlay (using ::after on the new element) */
+.docPage_docContainer .full-frame-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  /* Vertical gradient from 100% opacity to 0% opacity (image area)
+     mixing into the page's white background */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.0) 0%, /* Start fully transparent (full image) */
+    rgba(255, 255, 255, 0.02) 30%,
+    rgba(255, 255, 255, 0.5) 40%,
+    rgba(255, 255, 255, 1) 100% /* End fully opaque white (blends into white page) */
+  );
+}
+
+.widget-container {
+  /* This is the aggressive font size reset needed to counter Docusaurus's banner rules. */
+  font-size: 1rem !important;
+
+  /* Structural fixes to ensure the max-w-* utility classes work within a flex container. */
+  display: block !important;
+  width: 100% !important;
+
+  /* NEW: Prevents Docusaurus's surrounding flex containers (like the hero banner) from forcing the widget to stretch. */
+  flex-shrink: 0 !important;
+}
+
+/* Target the link container and force standard link/text color/behavior */
+.now-playing-link {
+    /* Reset Docusaurus link color to pure black/dark gray */
+    color: #1f2937 !important; /* Matches Tailwind text-gray-800 */
+    font-size: inherit !important; /* Use font size inherited from .widget-container (1rem) */
+    text-decoration: none !important; /* Remove any underline */
+    padding: 0; /* Tailwind padding will be added via JSX classes */
+}
+
+/* Track Name */
+.now-playing-link p:first-child {
+    color: #1f2937 !important; /* Matches Tailwind text-gray-800 */
+    font-size: initial !important;
+}
+
+/* Artist Name */
+.now-playing-link p:last-child {
+    color: #6b7280 !important; /* Matches Tailwind text-gray-500 */
+    font-size: initial !important;
+}
+
+/* Ensure the hover effect works as intended */
+.now-playing-link:hover, .now-playing-link:focus {
+    color: #4f46e5 !important; /* Matches Tailwind group-hover:text-indigo-600 */
+    text-decoration: none !important;
+}
+
+/* Ensure the progress bar container has sufficient background contrast */
+.now-playing-progress-bar-container {
+    background-color: #dffffc80 !important; /* Matches Tailwind bg-gray-200 */
+}
+.markdown pre {
+  /* Use explicit opaque white to override theme variables that might be semi-transparent */
+  background-color: #ffffff00 !important;
+  /* Ensure the text and code within the block are not affected by external opacity rules */
+  /* This specifically prevents the element from inheriting/being affected by opacity rules */
+  /* if they were set on a parent element like the main content area */
+  opacity: 1 !important;
+}
+.markdown pre code {
+  /* Set the code font background to transparent or match the parent 'pre' background */
+  background-color: transparent !important;
+}
+:not(pre) > code {
+  /* Enforce a solid white background for both the block and inline code */
+  background-color: var(--ifm-code-background-color, #dffffc50) !important;
+  opacity: unset !important;
+  /* Ensure the block covers the background fully */
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari support */
+
+  /* 3. Subtle Glass Border (for Definition) */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* 4. Optional: Box Shadow (for Depth) */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  /* 5. Optional: Rounded Corners (Improves aesthetic) */
+  border-radius: 7px;
+}
+.theme-admonition {
+  /* Use the white color to ensure the background image is fully obscured */
+  background-color: var(--ifm-background-color, #dffffc30) !important;
+  opacity: 1;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari support */
+
+  /* 3. Subtle Glass Border (for Definition) */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* 4. Optional: Box Shadow (for Depth) */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  /* 5. Optional: Rounded Corners (Improves aesthetic) */
+  border-radius: 12px;
+}
+
+/* Ensure the title/header bar is also opaque */
+.theme-admonition-header {
+  /* This prevents the background from showing through the header area */
+  background-color: var(--ifm-background-surface-color) !important;
+  opacity: 1;
+}
+/* Main Article/Content Wrapper (If needed) */
+.markdown,
+.docItemContainer {
+    background-color: #ffffff; /* Explicitly set the background to white */
+}
+.theme-code-block{
+ background-color: #ecfeff40 !important;
+ backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari support */
+
+  /* 3. Subtle Glass Border (for Definition) */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* 4. Optional: Box Shadow (for Depth) */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+
+  /* 5. Optional: Rounded Corners (Improves aesthetic) */
+  border-radius: 12px;
+}
+.theme-code-block button {
+  /* 1. Liquid Glass Base */
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+
+  /* Ensure the button is positioned relative to the code block */
+  /* (Docusaurus handles positioning, but ensure no conflicting styles) */
+  transition: all 0.2s ease-in-out;
+}
+
+/* Style for the button when hovered (optional) */
+.theme-code-block button:hover {
+  background-color: rgb(255, 255, 255); /* Increase opacity on hover */
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px); /* Subtle lift */
+}
+
+/* Target the SVG icon inside the button */
+/* The class you provided: .copyButtonIcon_TrPX */
+.theme-code-block button svg {
+  /* Set the icon color for contrast */
+  color: #000000;
+  fill: currentColor;
+}
+.navbar {
+  /* Make the background transparent or semi-transparent */
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(8px); /* The "liquid glass" effect */
+  -webkit-backdrop-filter: blur(8px); /* For Safari support */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Light border for definition */
+  transition: background-color 0.3s ease;
+}
+/* Ensure links/text remain readable */
+.navbar a,
+.navbar button {
+  color: var(--ifm-navbar-link-color) !important;
+}
+
