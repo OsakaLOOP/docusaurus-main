@@ -1,3 +1,6 @@
+/* stylelint-disable docusaurus/copyright-header */
+/* stylelint-disable alpha-value-notation */
+/* stylelint-disable docusaurus/copyright-header */
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
@@ -49,6 +52,8 @@
 .markdown pre code {
   /* Set the code font background to transparent or match the parent 'pre' background */
   background-color: transparent !important;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 :not(pre) > code {
   /* Enforce a solid white background for both the block and inline code */
@@ -66,6 +71,9 @@
 
   /* 5. Optional: Rounded Corners (Improves aesthetic) */
   border-radius: 7px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  display: inline-block;
 }
 .theme-admonition {
   /* Use the white color to ensure the background image is fully obscured */
@@ -79,7 +87,8 @@
 
   /* 4. Optional: Box Shadow (for Depth) */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
   /* 5. Optional: Rounded Corners (Improves aesthetic) */
   border-radius: 12px;
 }
@@ -99,7 +108,8 @@
  background-color: #ecfeff40 !important;
  backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(10px) saturate(180%); /* For Safari support */
-
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
   /* 3. Subtle Glass Border (for Definition) */
   border: 1px solid rgba(255, 255, 255, 0.3);
 
@@ -149,17 +159,27 @@
   /* Use the CSS variable set dynamically in the React component */
   background-image: var(--custom-bg-image-url);
 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center top;
-  position: absolute;
+  /* **CRITICAL FIX 1: Change to fixed positioning** This fixes the background relative to the viewport, preventing it from scrolling. */
+  position: fixed;
+
+  /* **CRITICAL FIX 2: Ensure it covers the whole viewport** */
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100vh; /* Set the height for the visible image/gradient area */
-  z-index: -2;
-}
 
+  /* **CRITICAL FIX 3: Set width and height to 100% of the viewport** 100vw = 100% of Viewport Width
+     100vh = 100% of Viewport Height */
+  width: 100vw;
+  height: 100vh;
+
+  /* Standard image properties for covering the area */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center, top;
+
+  /* Ensure it stays behind everything */
+  z-index: -200;
+  background-attachment: scroll;
+}
 /* 2. Gradient Overlay (using ::after on the new element) */
 .docPage_docContainer .full-frame-bg::after {
   content: '';
@@ -174,12 +194,14 @@
      mixing into the page's white background */
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.0) 0%, /* Start fully transparent (full image) */
-    rgba(255, 255, 255, 0.02) 30%,
-    rgba(255, 255, 255, 0.5) 40%,
-    rgba(255, 255, 255, 1) 100% /* End fully opaque white (blends into white page) */
-  );
-}
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.6) 1%,
+    rgba(255, 255, 255, 0.5) 2%,
+    rgba(255, 255, 255, 0.4) 5%,
+    rgba(255, 255, 255, 0.5) 30%,
+    rgba(255, 255, 255, 0.6) 40%,
+    rgba(255, 255, 255, 0.7) 80%,
+    rgba(255, 255, 255, 1) 100% )}
 .navbar {
   /* Make the background transparent or semi-transparent */
   background-color: rgba(255, 255, 255, 0.3) !important;
@@ -194,8 +216,27 @@
   /* Ensure content doesn't bleed out */
   overflow: hidden
 }
+.theme-doc-sidebar-container {
+  position: relative;
+  background-color: transparent !important;
+  z-index: 5;
+  border-radius:0px!important;
+  border: none !important;
+  border-right: none !important;
+}
+.theme-doc-sidebar-container .menu {
+  margin: 16px 10px 16px 8px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 /*fix for restricted sidebar dropdown*/
-/* Ensure links/text remain readable */
 .navbar a,
 .navbar button {
   color: var(--ifm-navbar-link-color) !important;
@@ -243,4 +284,84 @@
 /* Ensure the progress bar container has sufficient background contrast */
 .now-playing-progress-bar-container {
     background-color: #dffffc80 !important; /* Matches Tailwind bg-gray-200 */
+}
+blockquote {
+  /* 1. Liquid Glass Base */
+  background-color: rgba(255, 255, 255, 0.15);
+
+  /* 2. Frosted Blur Effect */
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+
+  /* 3. Subtle Glass Border & Shadow */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  /* 4. NOT FULL WIDTH */
+  /* This limits the width of the block quote */
+  max-width: 800px; /* Adjust this value to your preferred max width */
+  margin-left: 10px;
+
+  /* 5. Text/Padding adjustments */
+  padding: 20px;
+  padding-left: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+blockquote::before {
+  content: "『"; /* The desired open bracket icon */
+
+  /* Position the icon */
+  position: absolute;
+  top: 10px;      /* Adjust vertical position */
+  left: -10px;     /* Adjust horizontal position */
+
+  /* Style the icon */
+  font-size: 3em; /* Make the icon large and prominent */
+  line-height: 1; /* Ensure vertical alignment is clean */
+  font-family: serif; /* Use a font that renders the character cleanly */
+
+  /* Set a color that contrasts nicely with your liquid glass theme */
+  color: rgba(138, 224, 255, 0.7);
+  text-shadow:
+    /* Soft white glow (the reflection) */
+    0 0 5px rgba(255, 255, 255, 0.7),
+    /* Darker offset shadow (the depth/border) */
+    1px 1px 2px rgba(0, 0, 0, 0.3),
+    /* A faint, sharper white highlight */
+    -1px -1px 2px rgba(255, 255, 255, 0.8);
+  /* Optional: Prevent the icon from being selectable */
+  stroke:#ffffff;
+  stroke-width: 1px;
+  user-select: none;
+}
+.katex-display {
+  /* 1. Liquid Glass Base */
+  background-color: rgba(255, 255, 255, 0.15);
+
+  /* 2. Frosted Blur Effect */
+  backdrop-filter: blur(8px) saturate(180%);
+  -webkit-backdrop-filter: blur(8px) saturate(180%);
+
+  /* 3. Subtle Glass Border & Shadow */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  /* 4. NOT FULL WIDTH */
+  /* Use max-width and centering to prevent full width */
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* 5. Ensure internal KaTeX elements have padding */
+  padding: 15px;
+}
+.code {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  display: inline-block;
 }
