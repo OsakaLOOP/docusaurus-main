@@ -274,7 +274,7 @@ describe('headTags', () => {
             tagName: 'link',
             attributes: {
               rel: 'icon',
-              href: 'img/docusaurus.png',
+              href: 'img/favicon.ico',
             },
           },
         ],
