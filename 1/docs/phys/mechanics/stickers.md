@@ -1,6 +1,7 @@
 ---
 sidebar_postion: 0
 custom_bg_img: random
+displayed_sidebar: physSidebar
 ---
 
 #   普物力学便利贴
