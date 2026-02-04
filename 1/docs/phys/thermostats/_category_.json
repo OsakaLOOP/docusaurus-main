@@ -1,6 +1,6 @@
 {
   "label": "热统 Thermostatistics",
-  "position": 1,
+  "position": 3,
   "link": {
     "slug": "/thermostats",
     "type": "generated-index",
