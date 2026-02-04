@@ -155,32 +155,47 @@
 }
 
 /* 1. Full Background Image Container */
+/* =========================================
+   1. 背景容器 (核心重写)
+   ========================================= */
 .docPage_docContainer .full-frame-bg {
-  /* Use the CSS variable set dynamically in the React component */
-  background-image: var(--custom-bg-image-url);
-
-  /* **CRITICAL FIX 1: Change to fixed positioning** This fixes the background relative to the viewport, preventing it from scrolling. */
+  /* --- 基础定位 (覆盖全屏) --- */
   position: fixed;
-
-  /* **CRITICAL FIX 2: Ensure it covers the whole viewport** */
   top: 0;
   left: 0;
-
-  /* **CRITICAL FIX 3: Set width and height to 100% of the viewport** 100vw = 100% of Viewport Width
-     100vh = 100% of Viewport Height */
   width: 100vw;
   height: 100vh;
 
-  /* Standard image properties for covering the area */
+  /* --- 层级控制 (解决遮挡问题) --- */
+  /* 设置极小的负值，确保它在最底层 */
+  z-index: -999;
+  /* 极其重要：穿透点击，避免背景拦截鼠标事件 */
+  pointer-events: none;
+
+  /* --- 图片设置 --- */
+  background-image: var(--custom-bg-image-url);
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center, top;
-
-  /* Ensure it stays behind everything */
-  z-index: -200;
+  /* 必须是 scroll，否则 background-position 的移动逻辑会失效 */
   background-attachment: scroll;
+
+  /* --- ⚡️ 核心优化: 与 useScrollSync.js 联动 --- */
+  /* 定义默认值，防止 JS 未加载时错位 */
+  --scroll-percentage: 0%;
+
+  /* 使用 JS 计算出的变量控制垂直位置 (50% 是水平居中) */
+  background-position: 50% var(--scroll-percentage);
+
+  /* --- 🚀 性能与平滑优化 --- */
+  /* 0.1s linear 是实现"丝滑跟手"的关键，去除了 JS 计算的生硬感 */
+  transition: background-position 0.1s linear;
+  /* 告诉浏览器提前优化渲染，减少掉帧 */
+  will-change: background-position;
 }
-/* 2. Gradient Overlay (using ::after on the new element) */
+
+/* =========================================
+   2. 渐变遮罩 (保持原样，微调层级)
+   ========================================= */
 .docPage_docContainer .full-frame-bg::after {
   content: '';
   position: absolute;
@@ -188,10 +203,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
 
-  /* Vertical gradient from 100% opacity to 0% opacity (image area)
-     mixing into the page's white background */
+  /* 确保遮罩也无法阻挡点击 */
+  pointer-events: none;
+
+  /* 这里的 z-index 不需要设负数，因为它在 .full-frame-bg 内部
+     它会自然盖在 background-image 上面，形成遮罩 */
+  z-index: 1;
+
+  /* 你的原版渐变 */
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.9) 0%,
@@ -201,7 +221,11 @@
     rgba(255, 255, 255, 0.5) 30%,
     rgba(255, 255, 255, 0.6) 40%,
     rgba(255, 255, 255, 0.7) 80%,
-    rgba(255, 255, 255, 1) 100% )}
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+
 .navbar {
   /* Make the background transparent or semi-transparent */
   background-color: rgba(255, 255, 255, 0.3) !important;
